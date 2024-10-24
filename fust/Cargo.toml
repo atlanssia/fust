@@ -1,0 +1,21 @@
+[package]
+name = "fust"
+version = "0.1.0"
+edition.workspace = true
+authors.workspace = true
+
+[dependencies]
+webserver.workspace = true
+axum.workspace = true
+serde.workspace = true
+tokio = { workspace = true, features = ["full"] }
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+[build-dependencies]
+
+[dev-dependencies]
+
+
+[lints]
+workspace = true

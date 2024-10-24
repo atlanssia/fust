@@ -1,0 +1,20 @@
+[package]
+name = "webserver"
+version = "0.1.0"
+edition.workspace = true
+authors.workspace = true
+
+[dependencies]
+tracing.workspace = true
+tracing-subscriber.workspace = true
+axum.workspace = true
+tokio = { workspace = true, features = ["full"] }
+chrono.workspace = true
+humansize.workspace = true
+serde_derive.workspace = true
+sysinfo.workspace = true
+serde.workspace = true
+humantime.workspace = true
+
+[lints]
+workspace = true
