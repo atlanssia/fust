@@ -1,0 +1,13 @@
+[package]
+name = "source"
+version = "0.1.0"
+edition.workspace = true
+authors.workspace = true
+
+[dependencies]
+tokio = { workspace = true, features = ["full"] }
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+[lints]
+workspace = true
