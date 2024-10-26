@@ -17,3 +17,12 @@ pub struct Status {
     status: i8,
     description: String,
 }
+
+
+#[tokio::test]
+async fn health_check_returns_ok() {
+    let (status, body) = health().await;
+
+    assert_eq!(status, StatusCode::OK);
+    assert_eq!(body.0.status, 0);
+}
