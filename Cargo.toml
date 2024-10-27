@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["fust", "sink", "source", "util", "webserver"]
+members = ["fust", "sink", "source", "transform", "util", "webserver"]
 # exclude = ["crates/foo", "path/to/other"]
 
 default-members = ["fust"]
