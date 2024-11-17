@@ -1,0 +1,38 @@
+name = "MyConfig"
+description = "This is a sample configuration"
+version = "1.0.0"
+
+
+[connectors.pg]
+type = "postgres"
+host = "localhost"
+port = 5432
+user = "postgres"
+password = "password"
+
+[connectors.kafka]
+type = "kafka"
+brokers = "localhost:9092"
+topic = "test"
+
+[connectors.nats]
+type = "nats"
+url = "nats://localhost:4222"
+topic = "event"
+
+[sources.mysrc1]
+connector = "pg"
+database = "mydb1" # required, database name
+schema = "myschema1" # optional
+table = "mytable1"
+fields = [
+    { name = "id", type = "int" },
+    { name = "name", type = "text" },
+    { name = "age", type = "int" }
+]
+
+[sinks.mysink1]
+connector = "kafka"
+topic = "test"
+
+pipeline = ["source1", "connector1", "sink1"]
