@@ -4,6 +4,7 @@ use toml::{map::Map, Value};
 
 use crate::field::Field;
 
+// RdsConfig is the configuration for a PostgreSQL, MySQL, SQLite, Oracle, or Microsoft SQL Server database
 #[derive(Debug, Clone)]
 pub struct RdsConfig {
     pub host: String,
@@ -12,17 +13,20 @@ pub struct RdsConfig {
     pub password: String,
 }
 
+// KafkaConfig is the configuration for a Kafka connector
 #[derive(Debug, Clone)]
 pub struct KafkaConfig {
     pub brokers: String,
 }
 
+// NatsConfig is the configuration for a NATS connector
 #[derive(Debug, Clone)]
 pub struct NatsConfig {
     pub url: String,
     pub topic: String,
 }
 
+// ConnectorConfig is the configuration for a connector
 #[derive(Debug, Clone)]
 pub enum ConnectorConfig {
     Rds(RdsConfig),
@@ -30,6 +34,7 @@ pub enum ConnectorConfig {
     Nats(NatsConfig),
 }
 
+// SourceConfig is the configuration for a source connector
 #[derive(Debug, Clone)]
 pub struct SourceConfig {
     pub connector: ConnectorConfig,
@@ -37,13 +42,14 @@ pub struct SourceConfig {
     pub fields: Vec<Field>,
 }
 
+// SinkConfig is the configuration for a sink connector
 #[derive(Debug, Clone)]
 pub struct SinkConfig {
     pub connector: ConnectorConfig,
     pub config: HashMap<String, String>,
 }
 
-// ConfigSpec is the configuration file for a plugin
+// ConfigSpec is the configuration specification
 #[derive(Debug, Clone)]
 pub struct ConfigSpec {
     pub name: String,
