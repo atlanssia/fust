@@ -6,7 +6,7 @@ use tracing::info;
 
 use crate::system_info::system;
 
-pub async fn serve(rx: Arc<Mutex<Receiver<()>>>) {
+pub async fn serve(mut rx: Receiver<()>) {
     info!("running rest server...");
 
     let app = Router::new()
@@ -15,12 +15,9 @@ pub async fn serve(rx: Arc<Mutex<Receiver<()>>>) {
 
     let listener = TcpListener::bind("0.0.0.0:3000").await.unwrap();
     axum::serve(listener, app).with_graceful_shutdown(
-        async {
-            if let Ok(mut rx) = rx.lock().await {
-                rx.recv().await;
-            } else {
-                info!("failed to lock rx");
-            }
+        async move {
+            let _ = rx.recv().await;
+            info!("rest server received shutdown signal: {:?}", rx);
         }
     ).await.unwrap();
     info!("terminating rest server...");

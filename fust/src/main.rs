@@ -15,23 +15,29 @@ async fn main() {
     info!("starting");
 
     // register signal handler for termination signals
-    let (tx, mut rx) = broadcast::channel(1);
-    let rx = Arc::new(Mutex::new(rx));
+    let (tx, rx) = broadcast::channel(1);
+
+    let server_rx = tx.subscribe();
 
     let signal_handle = tokio::spawn({
-        let rx = Arc::clone(&rx);
         async move {
             let sigint = signal::ctrl_c();
             let mut sigterm =
-                unix::signal(SignalKind::terminate()).expect("failed to install signal handler");
+                unix::signal(SignalKind::terminate())
+                .expect("failed to install signal handler");
+
             tokio::select! {
                 _ = sigint => {},
                 _ = sigterm.recv() => {},
             }
+            info!("received termination signal");
             tx.send(()).unwrap();
         }
     });
 
-    let server_rx = Arc::clone(&rx);
-    let sever_handle = tokio::spawn(webserver::serve(server_rx));
+    let webserver_handle = tokio::spawn(async move {
+        webserver::serve(server_rx).await;
+    });
+
+    tokio::join!(signal_handle, webserver_handle);
 }
