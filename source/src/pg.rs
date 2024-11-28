@@ -8,6 +8,7 @@ pub struct PgSource {
     model: HashMap<String, String>,
 }
 
+/// Implement the Source trait for PgSource
 impl Source for PgSource {
     fn new() -> Self {
         // let (client, connection) = tokio_postgres::connect(config.database.source_connection, tokio::runtime::Handle::current()).await.unwrap();
