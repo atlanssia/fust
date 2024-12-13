@@ -1,7 +1,5 @@
-use std::sync::{Arc, Mutex};
-
 use axum::{http::StatusCode, routing::get, Json, Router};
-use tokio::{net::TcpListener, sync::broadcast::{error, Receiver}};
+use tokio::{net::TcpListener, sync::broadcast::Receiver};
 use tracing::info;
 
 use crate::system_info::system;

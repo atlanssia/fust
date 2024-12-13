@@ -1,5 +1,3 @@
-use std::sync::{Arc, Mutex};
-
 use tokio::{
     signal::{
         self,
@@ -15,7 +13,7 @@ async fn main() {
     info!("starting");
 
     // register signal handler for termination signals
-    let (tx, rx) = broadcast::channel(1);
+    let (tx, _rx) = broadcast::channel(1);
 
     let server_rx = tx.subscribe();
 

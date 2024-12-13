@@ -3,6 +3,8 @@ use deadpool_postgres::{Config, ManagerConfig, Pool, RecyclingMethod, Runtime};
 use tokio::sync::broadcast::Receiver;
 use tokio_postgres::{Client, NoTls};
 
+use tracing::{error, info};
+
 use crate::Source;
 
 pub struct PgSource {
