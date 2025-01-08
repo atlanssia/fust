@@ -33,9 +33,13 @@ async fn main() {
         }
     });
 
+    let pg_handle = tokio::spawn(async move {
+        
+    });
+
     let webserver_handle = tokio::spawn(async move {
         webserver::serve(server_rx).await;
     });
 
-    tokio::join!(signal_handle, webserver_handle);
+    tokio::join!(signal_handle, pg_handle, webserver_handle);
 }

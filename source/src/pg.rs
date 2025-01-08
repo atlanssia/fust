@@ -25,7 +25,7 @@ impl Source for PgSource {
         cfg.keepalives = Some(true);
         cfg.keepalives_idle = Some(Duration::from_secs(60));
 
-        let pool = cfg.create_pool(Some(Runtime::Tokio1), NoTls);
+        let pool = cfg.create_pool(Some(Runtime::Tokio1), NoTls).unwrap();
         
         PgSource { pool, shutdown_rx }
     }
@@ -47,19 +47,6 @@ impl Source for PgSource {
     }
 
     async fn run(&self) {
-        let mut shutdown_stream = BroadcastStream::new(self.shutdown_rx.clone());
-
-        while let Some(result) = shutdown_stream.next().await {
-            match result {
-                Ok(_) => {
-                    info!("Received shutdown signal, closing all connections...");
-                    self.pool.close();
-                    break;
-                }
-                Err(e) => {
-                    error!("Error receiving shutdown signal: {:?}", e);
-                }
-            }
-        }
+        // self.shutdown_rx.recv().await;
     }
 }
